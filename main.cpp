@@ -13,6 +13,9 @@ int main(void)
     int vx {2};
     int vy {-2};
 
+    float ball_r {15};
+
+
     InitWindow(screen_width, screen_height, "Bouncing Ball");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -22,19 +25,19 @@ int main(void)
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
 
-    	if (ball_y <= 0) {
+    	if (ball_y <= ball_r) {
     		vy = vy*-1;
     	}
 
-    	if (ball_x>screen_width) {
+    	if (ball_x>(screen_width-ball_r)) {
     		vx *= -1;
     	}
 
-    	if (ball_y >= screen_height) {
+    	if (ball_y >= (screen_height-ball_r)) {
     		vy = vy*-1;
     	}
 
-    	if (ball_x <= 0) {
+    	if (ball_x <= ball_r) {
     		vx = vx*-1;
     	}
 
@@ -47,7 +50,7 @@ int main(void)
 
             ClearBackground(RAYWHITE);
 
-            DrawCircle(ball_x, ball_y, 15, RED);
+            DrawCircle(ball_x, ball_y, ball_r, RED);
 
             //DrawText("Raylib is working!", 5, screen_height - 55, 50, LIGHTGRAY);
 
