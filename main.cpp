@@ -12,6 +12,39 @@ struct Ball
 };
 
 
+void apply_collision(Ball& ball_1, int screen_width, int screen_height)
+{
+
+	if (ball_1.y <= ball_1.radius) {
+		ball_1.vy = ball_1.vy*-1;
+	}
+
+	if (ball_1.x>(screen_width-ball_1.radius)) {
+		ball_1.vx *= -1;
+	}
+
+	if (ball_1.y >= (screen_height-ball_1.radius)) {
+		ball_1.vy = ball_1.vy*-1;
+	}
+
+	if (ball_1.x <= ball_1.radius) {
+		ball_1.vx = ball_1.vx*-1;
+	}
+
+}
+
+void ball_movement(Ball& ball_1)
+{
+	ball_1.x = ball_1.x + ball_1.vx;
+	ball_1.y = ball_1.y + ball_1.vy;
+}
+
+void draw_ball(const Ball& ball_1)
+{
+    DrawCircle(ball_1.x, ball_1.y, ball_1.radius, ball_1.color);
+}
+
+
 int main(void)
 {
     // Initialization
@@ -19,12 +52,8 @@ int main(void)
     const int screen_width = 800;
     const int screen_height = 600;
 
-    Ball ball_1 {100, 300, 2, -2, 15, RED};
+    Ball ball_1 {100, 300, 4, -4, 40, RED};
     Ball ball_2 {screen_width/2, screen_height/2, 1, 1, 10, GREEN};
-
-
-
-
 
     InitWindow(screen_width, screen_height, "Bouncing Ball");
 
@@ -35,46 +64,12 @@ int main(void)
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
 
-
-    	if (ball_1.y <= ball_1.radius) {
-    		ball_1.vy = ball_1.vy*-1;
-    	}
-
-    	if (ball_1.x>(screen_width-ball_1.radius)) {
-    		ball_1.vx *= -1;
-    	}
-
-    	if (ball_1.y >= (screen_height-ball_1.radius)) {
-    		ball_1.vy = ball_1.vy*-1;
-    	}
-
-    	if (ball_1.x <= ball_1.radius) {
-    		ball_1.vx = ball_1.vx*-1;
-    	}
+    	apply_collision(ball_1, screen_width, screen_height);
+    	apply_collision(ball_2, screen_width, screen_height);
 
 
-    	if (ball_2.y <= ball_2.radius) {
-    		ball_2.vy = ball_2.vy*-1;
-    	}
-
-    	if (ball_2.x>(screen_width-ball_2.radius)) {
-    		ball_2.vx *= -1;
-    	}
-
-    	if (ball_2.y >= (screen_height-ball_2.radius)) {
-    		ball_2.vy = ball_2.vy*-1;
-    	}
-
-    	if (ball_2.x <= ball_2.radius) {
-    		ball_2.vx = ball_2.vx*-1;
-    	}
-
-
-    	ball_1.x = ball_1.x + ball_1.vx;
-    	ball_1.y = ball_1.y + ball_1.vy;
-
-    	ball_2.x = ball_2.x + ball_2.vx;
-    	ball_2.y = ball_2.y + ball_2.vy;
+    	ball_movement(ball_1);
+    	ball_movement(ball_2);
 
 
     	// Draw
@@ -83,12 +78,8 @@ int main(void)
 
             ClearBackground(RAYWHITE);
 
-            DrawCircle(ball_1.x, ball_1.y, ball_1.radius, ball_1.color);
-
-            DrawCircle(ball_2.x, ball_2.y, ball_2.radius, ball_2.color);
-
-
-            //DrawText("Raylib is working!", 5, screen_height - 55, 50, LIGHTGRAY);
+            draw_ball(ball_1);
+            draw_ball(ball_2);
 
             //DrawText(TextFormat("x=%d Y=%d", ball_x, ball_y),20 , screen_height-50, 30 , BLACK);
 
