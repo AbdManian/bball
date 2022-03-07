@@ -15,6 +15,16 @@ int main(void)
 
     float ball_r {15};
 
+    int ball_x_2 {screen_width/2};
+    int ball_y_2 {screen_height/2};
+
+    int vx_2 {1};
+    int vy_2 {1};
+
+    float ball_r_2 {10};
+
+
+
 
     InitWindow(screen_width, screen_height, "Bouncing Ball");
 
@@ -42,15 +52,39 @@ int main(void)
     	}
 
 
+
+    	if (ball_y_2 <= ball_r_2) {
+    		vy_2 = vy_2*-1;
+    	}
+
+    	if (ball_x_2>(screen_width-ball_r_2)) {
+    		vx_2 *= -1;
+    	}
+
+    	if (ball_y_2 >= (screen_height-ball_r_2)) {
+    		vy_2 = vy_2*-1;
+    	}
+
+    	if (ball_x_2 <= ball_r_2) {
+    		vx_2 = vx_2*-1;
+    	}
+
+
     	ball_x = ball_x + vx;
     	ball_y = ball_y + vy;
-        // Draw
+
+    	ball_x_2 = ball_x_2 + vx_2;
+    	ball_y_2 = ball_y_2 + vy_2;
+    	// Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
 
             DrawCircle(ball_x, ball_y, ball_r, RED);
+
+            DrawCircle(ball_x_2, ball_y_2, ball_r_2, GREEN);
+
 
             //DrawText("Raylib is working!", 5, screen_height - 55, 50, LIGHTGRAY);
 
