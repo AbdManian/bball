@@ -1,5 +1,17 @@
 #include "raylib.h"
 
+
+struct Ball
+{
+	int x;
+	int y;
+	int vx;
+	int vy;
+	float radius;
+	Color color;
+};
+
+
 int main(void)
 {
     // Initialization
@@ -7,21 +19,9 @@ int main(void)
     const int screen_width = 800;
     const int screen_height = 600;
 
-    int ball_x {100};
-    int ball_y {300};
+    Ball ball_1 {100, 300, 2, -2, 15, RED};
+    Ball ball_2 {screen_width/2, screen_height/2, 1, 1, 10, GREEN};
 
-    int vx {2};
-    int vy {-2};
-
-    float ball_r {15};
-
-    int ball_x_2 {screen_width/2};
-    int ball_y_2 {screen_height/2};
-
-    int vx_2 {1};
-    int vy_2 {1};
-
-    float ball_r_2 {10};
 
 
 
@@ -35,60 +35,62 @@ int main(void)
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
 
-    	if (ball_y <= ball_r) {
-    		vy = vy*-1;
+
+    	if (ball_1.y <= ball_1.radius) {
+    		ball_1.vy = ball_1.vy*-1;
     	}
 
-    	if (ball_x>(screen_width-ball_r)) {
-    		vx *= -1;
+    	if (ball_1.x>(screen_width-ball_1.radius)) {
+    		ball_1.vx *= -1;
     	}
 
-    	if (ball_y >= (screen_height-ball_r)) {
-    		vy = vy*-1;
+    	if (ball_1.y >= (screen_height-ball_1.radius)) {
+    		ball_1.vy = ball_1.vy*-1;
     	}
 
-    	if (ball_x <= ball_r) {
-    		vx = vx*-1;
-    	}
-
-
-
-    	if (ball_y_2 <= ball_r_2) {
-    		vy_2 = vy_2*-1;
-    	}
-
-    	if (ball_x_2>(screen_width-ball_r_2)) {
-    		vx_2 *= -1;
-    	}
-
-    	if (ball_y_2 >= (screen_height-ball_r_2)) {
-    		vy_2 = vy_2*-1;
-    	}
-
-    	if (ball_x_2 <= ball_r_2) {
-    		vx_2 = vx_2*-1;
+    	if (ball_1.x <= ball_1.radius) {
+    		ball_1.vx = ball_1.vx*-1;
     	}
 
 
-    	ball_x = ball_x + vx;
-    	ball_y = ball_y + vy;
+    	if (ball_2.y <= ball_2.radius) {
+    		ball_2.vy = ball_2.vy*-1;
+    	}
 
-    	ball_x_2 = ball_x_2 + vx_2;
-    	ball_y_2 = ball_y_2 + vy_2;
+    	if (ball_2.x>(screen_width-ball_2.radius)) {
+    		ball_2.vx *= -1;
+    	}
+
+    	if (ball_2.y >= (screen_height-ball_2.radius)) {
+    		ball_2.vy = ball_2.vy*-1;
+    	}
+
+    	if (ball_2.x <= ball_2.radius) {
+    		ball_2.vx = ball_2.vx*-1;
+    	}
+
+
+    	ball_1.x = ball_1.x + ball_1.vx;
+    	ball_1.y = ball_1.y + ball_1.vy;
+
+    	ball_2.x = ball_2.x + ball_2.vx;
+    	ball_2.y = ball_2.y + ball_2.vy;
+
+
     	// Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
 
-            DrawCircle(ball_x, ball_y, ball_r, RED);
+            DrawCircle(ball_1.x, ball_1.y, ball_1.radius, ball_1.color);
 
-            DrawCircle(ball_x_2, ball_y_2, ball_r_2, GREEN);
+            DrawCircle(ball_2.x, ball_2.y, ball_2.radius, ball_2.color);
 
 
             //DrawText("Raylib is working!", 5, screen_height - 55, 50, LIGHTGRAY);
 
-            DrawText(TextFormat("x=%d Y=%d", ball_x, ball_y),20 , screen_height-50, 30 , BLACK);
+            //DrawText(TextFormat("x=%d Y=%d", ball_x, ball_y),20 , screen_height-50, 30 , BLACK);
 
             //DrawFPS(10, 10);
 
