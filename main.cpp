@@ -1,5 +1,50 @@
 #include "raylib.h"
 
+
+struct Ball
+{
+	int x;
+	int y;
+	int vx;
+	int vy;
+	float radius;
+	Color color;
+};
+
+
+void apply_collision(Ball& ball_1, int screen_width, int screen_height)
+{
+
+	if (ball_1.y <= ball_1.radius) {
+		ball_1.vy = ball_1.vy*-1;
+	}
+
+	if (ball_1.x>(screen_width-ball_1.radius)) {
+		ball_1.vx *= -1;
+	}
+
+	if (ball_1.y >= (screen_height-ball_1.radius)) {
+		ball_1.vy = ball_1.vy*-1;
+	}
+
+	if (ball_1.x <= ball_1.radius) {
+		ball_1.vx = ball_1.vx*-1;
+	}
+
+}
+
+void ball_movement(Ball& ball_1)
+{
+	ball_1.x = ball_1.x + ball_1.vx;
+	ball_1.y = ball_1.y + ball_1.vy;
+}
+
+void draw_ball(const Ball& ball_1)
+{
+    DrawCircle(ball_1.x, ball_1.y, ball_1.radius, ball_1.color);
+}
+
+
 int main(void)
 {
     // Initialization
@@ -7,14 +52,8 @@ int main(void)
     const int screen_width = 800;
     const int screen_height = 600;
 
-    int ball_x {100};
-    int ball_y {300};
-
-    int vx {2};
-    int vy {-2};
-
-    float ball_r {15};
-
+    Ball ball_1 {100, 300, 4, -4, 40, RED};
+    Ball ball_2 {screen_width/2, screen_height/2, 1, 1, 10, GREEN};
 
     InitWindow(screen_width, screen_height, "Bouncing Ball");
 
@@ -25,36 +64,24 @@ int main(void)
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
 
-    	if (ball_y <= ball_r) {
-    		vy = vy*-1;
-    	}
-
-    	if (ball_x>(screen_width-ball_r)) {
-    		vx *= -1;
-    	}
-
-    	if (ball_y >= (screen_height-ball_r)) {
-    		vy = vy*-1;
-    	}
-
-    	if (ball_x <= ball_r) {
-    		vx = vx*-1;
-    	}
+    	apply_collision(ball_1, screen_width, screen_height);
+    	apply_collision(ball_2, screen_width, screen_height);
 
 
-    	ball_x = ball_x + vx;
-    	ball_y = ball_y + vy;
-        // Draw
+    	ball_movement(ball_1);
+    	ball_movement(ball_2);
+
+
+    	// Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
 
-            DrawCircle(ball_x, ball_y, ball_r, RED);
+            draw_ball(ball_1);
+            draw_ball(ball_2);
 
-            //DrawText("Raylib is working!", 5, screen_height - 55, 50, LIGHTGRAY);
-
-            DrawText(TextFormat("x=%d Y=%d", ball_x, ball_y),20 , screen_height-50, 30 , BLACK);
+            //DrawText(TextFormat("x=%d Y=%d", ball_x, ball_y),20 , screen_height-50, 30 , BLACK);
 
             //DrawFPS(10, 10);
 
