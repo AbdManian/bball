@@ -52,8 +52,8 @@ int main(void)
     const int screen_width = 800;
     const int screen_height = 600;
 
-    Ball ball_1 {100, 300, 4, -4, 40, RED};
-    Ball ball_2 {screen_width/2, screen_height/2, 1, 1, 10, GREEN};
+    Ball ball_1 {100, 300, 2, -2, 40, RED};
+    Ball ball_2 {screen_width/2, screen_height/2, 3, 3, 10, GREEN};
 
     InitWindow(screen_width, screen_height, "Bouncing Ball");
 
@@ -81,7 +81,7 @@ int main(void)
             draw_ball(ball_1);
             draw_ball(ball_2);
 
-            //DrawText(TextFormat("x=%d Y=%d", ball_x, ball_y),20 , screen_height-50, 30 , BLACK);
+            DrawText(TextFormat("Ball1 X=%d Y=%d", ball_1.x, ball_1.y),20 , screen_height-50, 40 , BLACK);
 
             //DrawFPS(10, 10);
 

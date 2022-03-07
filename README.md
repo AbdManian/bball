@@ -1,5 +1,7 @@
-# Bouncing Ball
-Bouncing Ball based on Raylib (prebuild library for Win64)
+# Bouncing Balls
+![](doc/sample-run.gif)
+
+Bouncing Balls based on Raylib (prebuild library for Win64)
 
 Compiled with `winlibs-x86_64-posix-seh-gcc-11.2.0-mingw-w64-9.0.0-r3`
 
